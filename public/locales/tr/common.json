@@ -2,5 +2,8 @@
     "welcome": "Hoşgeldiniz",
     "upload": "Model Yükle",
     "price": "Fiyat",
-    "contact": "İletişim"
+    "contact": "İletişim",
+    "hero_title": "Her Hayal İçin Hassas Baskı",
+    "hero_description": "STL dosyalarınızı zahmetsizce yükleyin ve projelerinize özel anında fiyatlandırma alın. Son teknoloji 3D yazıcılarımız, yüksek kaliteli sonuçlar sunarak fikirlerinizi daha hızlı hayata geçirmenize yardımcı olur.",
+    "hero_button": "Hemen Başla"
 }

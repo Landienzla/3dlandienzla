@@ -24,19 +24,23 @@ const STLViewer = () => {
   let controls: OrbitControls;
 
   useEffect(() => {
+    const width = mountRef.current?.clientWidth || 300;
+    const height = mountRef.current?.clientHeight || 300;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      width / height,
+      // window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
+    // renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
 
     mountRef.current?.appendChild(renderer.domElement);
-
+    scene.background = new THREE.Color(0xffffff);
     // Add lighting
     const ambientLight = new THREE.AmbientLight(0x007bff, 1);
     scene.add(ambientLight);
@@ -46,7 +50,7 @@ const STLViewer = () => {
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
-    const gridHelper = new THREE.GridHelper(10000, 100); // Large grid
+    const gridHelper = new THREE.GridHelper(10000, 400); // Large grid
     scene.add(gridHelper);
 
     // Load STL models
@@ -56,27 +60,6 @@ const STLViewer = () => {
       model2: "./test2.stl",
       model3: "./test3.stl", // Add your models here
     };
-
-    // const loadModel = (modelKey: string) => {
-    //   // Clear existing meshes
-    //   meshes.forEach((mesh) => scene.remove(mesh));
-    //   setMeshes([]); // Clear meshes from state
-
-    //   // Load the new model
-    //   loader.load(modelFiles[modelKey], (geometry: any) => {
-    //     const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-    //     const mesh = new THREE.Mesh(geometry, material);
-    //     mesh.castShadow = true;
-    //     mesh.receiveShadow = true;
-    //     scene.add(mesh);
-    //     setMeshes((prev) => [...prev, mesh]); // Add the new mesh to state
-
-    //     // Position camera based on the new object size
-    //     const box = new THREE.Box3().setFromObject(mesh);
-    //     const size = box.getSize(new THREE.Vector3());
-    //     camera.position.set(size.x, size.y, size.z * 2);
-    //   });
-    // };
     const loadModel = (modelKey: string) => {
       // Clear existing meshes
       meshes.forEach((mesh) => scene.remove(mesh));
@@ -84,7 +67,7 @@ const STLViewer = () => {
 
       // Load the new model
       // @ts-ignore
-      loader.load(modelFiles[modelKey] , (geometry: any) => {
+      loader.load(modelFiles[modelKey], (geometry: any) => {
         const boundingBox = new THREE.Box3().setFromObject(
           new THREE.Mesh(geometry)
         );
@@ -112,10 +95,10 @@ const STLViewer = () => {
 
     // Add OrbitControls
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.25;
-    controls.enableZoom = true;
-    controls.enablePan = true;
+    controls.autoRotate = true;
+    // controls.dampingFactor = 0.25;
+    // controls.enableZoom = true;
+    // controls.enablePan = true;
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -154,12 +137,23 @@ const STLViewer = () => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        position: "relative",
+        backgroundColor: "black",
+        color: "white",
+      }}
+    >
       {/* 3D Scene */}
-      <div ref={mountRef} style={{ width: "100vw", height: "80vh" }} />
+      <div ref={mountRef} />
 
       {/* Model Selector */}
-      <FormControl
+      {/* <FormControl
         variant="outlined"
         style={{ width: 200, backgroundColor: "white" }}
       >
@@ -175,7 +169,7 @@ const STLViewer = () => {
           <MenuItem value="model2">Model 2</MenuItem>
           <MenuItem value="model3">Model 3</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       {/* Camera presets */}
       {/* <Box display="flex" justifyContent="space-around" marginTop={2}>

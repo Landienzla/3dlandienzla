@@ -1,6 +1,6 @@
 import STLViewer from "@/components/dev/stl";
 import { getDictionary } from "./dictionaries";
-
+import Animation from "@/components/dev/animation";
 export default async function Home({
   params: { locale },
 }: {
@@ -16,8 +16,11 @@ export default async function Home({
     "
     >
       <main className="">
-        <div className="w-[30vw] h-[30vw]">
-          <STLViewer />
+        <div className="w-[90vw] h-[30vw]mx-auto">
+          <Animation dictionary={locale_dictionary} />
+          <div className="w-[30vw] h-[80vh] bg-red-400">
+            <STLViewer />
+          </div>
         </div>
       </main>
     </div>

@@ -2,5 +2,8 @@
     "welcome": "Welcome to My App",
     "upload": "Upload Your Model",
     "price": "Price",
-    "contact": "Contact Us"
+    "contact": "Contact Us",
+    "hero_title": "Precision Printing for Every Imagination",
+    "hero_description": "Effortlessly upload your STL files and get instant pricing tailored to your project. Our cutting-edge 3D printing technology guarantees high-quality results, helping you bring your ideas to life faster than ever.",
+    "hero_button": "Get Started"
 }
